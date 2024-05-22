@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Запись на отработку</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  h1 {
+    color: #333;
+  }
+  select {
+    margin-bottom: 10px;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<h1>Запись на отработку</h1>
+
+<select id="location">
+  <option value="">Выберите локацию</option>
+  <option value="suvarova">Суворова</option>
+  <option value="prospekt">Проспект</option>
+  <option value="leninskiy">Ленинский</option>
+</select>
+
+<select id="date" disabled>
+  <option value="">Выберите дату</option>
+</select>
+
+<select id="time" disabled>
+  <option value="">Выберите время</option>
+</select>
+
+<button id="submit" disabled>Записаться</button>
+
+<script>
+  const locations = {
+    suvarova: ['Понедельник', 'Вторник'],
+    prospekt: ['Среда', 'Четверг'],
+    leninskiy: ['Пятница', 'Суббота']
+  };
+
+  const dates = {
+    Monday: ['10:00', '14:00'],
+    Tuesday: ['10:00', '14:00'],
+    Wednesday: ['10:00', '14:00'],
+    Thursday: ['10:00', '14:00'],
+    Friday: ['10:00', '14:00'],
+    Saturday: ['10:00', '14:00']
+  };
+
+  document.getElementById('location').addEventListener('change', function() {
+    const location = this.value;
+    const locationDates = locations[location];
+    const dateSelect = document.getElementById('date');
+    dateSelect.innerHTML = '<option value="">Выберите дату</option>';
+    locationDates.forEach(date => {
+      dateSelect.innerHTML += `<option value="${date}">${date}</option>`;
+    });
+    dateSelect.disabled = false;
+  });
+
+  document.getElementById('date').addEventListener('change', function() {
+    const date = this.value;
+    const dateTimes = dates[date];
+    const timeSelect = document.getElementById('time');
+    timeSelect.innerHTML = '<option value="">Выберите время</option>';
+    dateTimes.forEach(time => {
+      timeSelect.innerHTML += `<option value="${time}">${time}</option>`;
+    });
+    timeSelect.disabled = false;
+    document.getElementById('submit').disabled = false;
+  });
+
+  document.getElementById('submit').addEventListener('click', function() {
+    const location = document.getElementById('location').value;
+    const date = document.getElementById('date').value;
+    const time = document.getElementById('time').value;
+    alert(`Вы записаны на отработку в локации ${location} на ${date} в ${time}.`);
+  });
+</script>
+
+</body>
+</html>
